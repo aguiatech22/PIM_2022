@@ -3,14 +3,16 @@
 #include <stdlib.h>
 #include "comum.h"
 #include "login.h"
+#include "cadastroUsuario.h"
 
 bool loginSistema(){
-    stUsuario usuarioSistema, usuarioSistema_comp = {0};
+    struct stUsuCadastro usuarioSistema ={0};
+    struct stUsuCadastro usuarioSistema_comp = {0};
 
     chamaTelaLogin();
     usuarioSistema = trataInputLogin();
 
-    return memcmp(usuarioSistema.codusu, usuarioSistema_comp.codusu, sizeof(usuarioSistema.codusu)) == 0;
+    return memcmp(usuarioSistema.codigoUsuario, usuarioSistema_comp.codigoUsuario, sizeof(usuarioSistema.codigoUsuario)) == 0;
 
 }
 
@@ -20,45 +22,63 @@ void chamaTelaLogin(){
     desenhaTelaLogin();
 }
 
-stUsuario validaUsuario (stUsuLogin usuInput){
+struct stUsuCadastro validaUsuario ( struct stUsuLogin usuInput){
    // Valida se os usuario e senha estão preenchidos
    FILE *tabelaUsuario;
-   stUsuario UsuarioSystem;
+   struct stUsuCadastro usuarioArquivo;
+   struct stUsuLogin usuInputaux;
    int c;
 
+   usuInputaux = usuInput;
    // Validar se o usuario e senha estão preenchidos
-  memset(&UsuarioSystem, '\0' , sizeof(UsuarioSystem));
-  if((tabelaUsuario = fopen("./BancoDados/T_usuario.dat","rb"))==NULL)
+  memset(&usuarioArquivo, '\0' , sizeof(usuarioArquivo));
+  tabelaUsuario = fopen("./BancoDados/T_USUARIO.dat","rb");
+  if( tabelaUsuario == NULL )
   {
     exibeMensagemSistema("Arquivo nao pode ser aberto.\n");
   }
 
-   while(fread(&UsuarioSystem, sizeof(UsuarioSystem), 1, tabelaUsuario))
+   while( fread (&usuarioArquivo, sizeof(usuarioArquivo), 1, tabelaUsuario) )
    {
-     if ( strcmp(UsuarioSystem.codusu,usuInput.codusu) == 0 &&
-          strcmp(UsuarioSystem.senhausu,usuInput.senhausu) != 0 ){
+     if ( strcmp(usuarioArquivo.codigoUsuario,usuInput.codusu) == 0 &&
+          strcmp(usuarioArquivo.senhaUsuario,usuInput.senhausu) != 0 ){
         exibeMensagemSistema("Senha incorreta!");
-        memset(&UsuarioSystem, '\0' , sizeof(UsuarioSystem));
+        memset(&usuarioArquivo, '\0' , sizeof(usuarioArquivo));
         fclose(tabelaUsuario);
-        return UsuarioSystem;
+        return usuarioArquivo;
      }
-     else if ( strcmp(UsuarioSystem.codusu,usuInput.codusu) == 0 &&
-               strcmp(UsuarioSystem.senhausu,usuInput.senhausu) == 0 ){
+     else if ( strcmp(usuarioArquivo.codigoUsuario,usuInput.codusu) == 0 &&
+               strcmp(usuarioArquivo.senhaUsuario,usuInput.senhausu) == 0 ){
         fclose(tabelaUsuario);
-        return UsuarioSystem;
+        return usuarioArquivo;
      }
+     /*if ( usuarioArquivo.codigoUsuario == usuInput.codusu &&
+          usuarioArquivo.senhaUsuario  != usuInput.senhausu )
+        {
+        exibeMensagemSistema("Senha incorreta!");
+        memset(&usuarioArquivo, '\0' , sizeof(usuarioArquivo));
+        fclose(tabelaUsuario);
+        return usuarioArquivo;
+     }
+     else if ( usuarioArquivo.codigoUsuario == usuInput.codusu  &&
+               usuarioArquivo.senhaUsuario == usuInput.senhausu ){
+        fclose(tabelaUsuario);
+        return usuarioArquivo;
+        break;
+     }*/
+
    }
 
-   memset(&UsuarioSystem, '\0' , sizeof(UsuarioSystem));
+   memset(&usuarioArquivo, '\0' , sizeof(usuarioArquivo));
    exibeMensagemSistema("Usuario nao encontrado!");
    fclose(tabelaUsuario);
-   return UsuarioSystem;
+   return usuarioArquivo;
 };
 
-stUsuLogin inputUsuarioLogin(){
+struct stUsuLogin inputUsuarioLogin(){
  char cInput;
  int i = 0;
- stUsuLogin retunrUsuLogin;
+ struct stUsuLogin retunrUsuLogin;
 
  // Posiciona a entrada do usuário
  memset(retunrUsuLogin.codusu, '\0' , sizeof(retunrUsuLogin.codusu));
@@ -75,7 +95,6 @@ stUsuLogin inputUsuarioLogin(){
               cInput != ENTER &&
               cInput != SPACE &&
               i != S_CODUSU) {
-        //printf("%c",cInput);
         putch(cInput);
         retunrUsuLogin.codusu[i] = cInput;
         i++;
@@ -106,9 +125,9 @@ stUsuLogin inputUsuarioLogin(){
  return retunrUsuLogin;
 };
 
-stUsuario trataInputLogin(){
- stUsuLogin usuLogin;
- stUsuario returnUsuario = {0};
+struct stUsuCadastro trataInputLogin(){
+struct stUsuLogin usuLogin;
+struct stUsuCadastro returnUsuario = {0};
  memset(&returnUsuario,'\0',sizeof(returnUsuario));
  usuLogin = inputUsuarioLogin();
  returnUsuario = validaUsuario(usuLogin);
@@ -116,8 +135,8 @@ stUsuario trataInputLogin(){
 };
 
 void desenhaTelaLogin(){
- stUsuLogin usuLogin;
- stUsuario usuarioSistema;
+struct stUsuLogin usuLogin;
+//struct stUsuLogin usuarioSistema;
  memset(&usuLogin, '\0', sizeof(usuLogin));
 
  // Entrada de textos do login

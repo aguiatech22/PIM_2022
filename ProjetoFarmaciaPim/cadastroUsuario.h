@@ -6,7 +6,7 @@
 #define S_DATANASCIMENTO 10
 #endif // CADASTROUSUARIO_H_INCLUDED
 
- struct stUsuCadastro{
+struct stUsuCadastro{
     char codigoUsuario[S_CODUSU];
     char senhaUsuario[S_SENHAUSU];
     char nomeUsuario[S_NOMEUSU];

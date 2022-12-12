@@ -158,17 +158,17 @@
 	<windows.h>
 	<conio.h>
 
-1670202571 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\login.c
+1670816456 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\login.c
 	<stdbool.h>
 	<conio.h>
 	<stdlib.h>
 	"comum.h"
 	"login.h"
+	"cadastroUsuario.h"
 
-1669597226 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\login.h
-	"users.h"
+1670815131 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\login.h
 
-1670790256 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\menusistema.c
+1670810758 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\menusistema.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -180,7 +180,7 @@
 
 1668865499 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\menusistema.h
 
-1670790312 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrousuario.c
+1670812317 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrousuario.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -192,9 +192,9 @@
 
 1669597252 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\users.h
 
-1670789490 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrousuario.h
+1670814265 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrousuario.h
 
-1670680167 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrocliente.c
+1670812320 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrocliente.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -204,9 +204,9 @@
 	"string.h"
 	"cadastroCliente.h"
 
-1670290322 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrocliente.h
+1670811263 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastrocliente.h
 
-1670681633 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastroproduto.c
+1670806032 source:c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastroproduto.c
 	<stdlib.h>
 	<stdbool.h>
 	<conio.h>
@@ -215,5 +215,5 @@
 	"string.h"
 	"cadastroProduto.h"
 
-1670379468 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastroproduto.h
+1670804269 c:\users\everson\desktop\novo\pimeverson-main\projetofarmaciapim\cadastroproduto.h
 

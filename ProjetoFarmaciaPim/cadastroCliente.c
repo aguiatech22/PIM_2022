@@ -8,12 +8,31 @@
 #include "cadastroCliente.h"
 
 bool cadastroCliente(){
-    stUsuCliente cadastroCliente;
+    char digResposta;
+    struct stUsuCliente cadastroCliente;
     chamaTelaCadastroCliente();
     cadastroCliente = trataInputCliente();
+    consoleTela();
+    desenhaTelaPadrao();
 
-    //return memcmp(cadastroSistema.codusu, cadastroSistema_comp.codusu, sizeof(cadastroSistema.codusu)) == 0;
-    return true;
+    digResposta = '\0';
+    bool ok = false;
+    while(ok == false){
+        if ( digResposta == 'S' || digResposta == 'N' || digResposta == 's' || digResposta == 'n' )
+         {
+             ok = true;
+         }
+         else
+         {
+            setCursorXY(10,10);
+            printf("Deseja cadastrar um novo cliente?(S/N)");
+            scanf("%s", &digResposta);
+         }
+    }
+     if (digResposta == 'S' ||digResposta == 's' )
+      return true;
+     else
+        return false;
 }
 
 void chamaTelaCadastroCliente()
@@ -25,8 +44,8 @@ void chamaTelaCadastroCliente()
 void desenhaTelaCadastroCliente()
 {
 
- stUsuCliente usuCliente;
- memset(&usuCliente, '\0', sizeof(usuCliente));
+ //stUsuCliente usuCliente;
+ //memset(&usuCliente, '\0', sizeof(usuCliente));
 
  // Entrada de dados cadastro
  int linha, coluna;
@@ -39,10 +58,6 @@ void desenhaTelaCadastroCliente()
  linha++;
 
  setCursorXY(coluna,linha);
- printf("Senha               :");
- linha++;
-
- setCursorXY(coluna,linha);
  printf("Nome                :");
  linha++;
 
@@ -51,8 +66,8 @@ void desenhaTelaCadastroCliente()
 
 };
 
-stUsuCliente trataInputCliente(){
- stUsuCliente retornoCadastroCliente = {0};
+struct stUsuCliente trataInputCliente(){
+ struct stUsuCliente retornoCadastroCliente = {0};
 
  char cInput;
  int i = 0;
@@ -74,36 +89,14 @@ stUsuCliente trataInputCliente(){
       else if(cInput != BACKSPACE &&
               cInput != ENTER &&
               cInput != SPACE &&
-              i != S_CODUSU) {
+              i != S_CODCLI) {
         putch(cInput);
         retornoCadastroCliente.codigoCliente[i] = cInput;
         i++;
       };
  }while (cInput != ENTER);
 
- // Posiciona a entrada da Senha
- i = 0;
- linha++;
- setCursorXY(coluna,linha);
- memset(&retornoCadastroCliente.senhaCliente, '\0' , sizeof(retornoCadastroCliente.senhaCliente));
- do{
-      cInput = getch();
-      if (cInput == BACKSPACE && i > 0){
-        retornoCadastroCliente.senhaCliente[i] = '\0';
-        printf("\b \b");
-        i--;
-      }
-      else if(cInput != BACKSPACE &&
-              cInput != ENTER &&
-              cInput != SPACE &&
-              i != S_SENHAUSU) {
-        putch('*');
-        retornoCadastroCliente.senhaCliente[i] = cInput;
-        i++;
-      };
- }while (cInput != ENTER); // Verificar se o usuario apertar enter primeiro
-
- // Posiciona a entrada Nome
+// Posiciona a entrada Nome
  i = 0;
  linha++;
  setCursorXY(coluna,linha);
@@ -117,8 +110,8 @@ stUsuCliente trataInputCliente(){
       }
       else if(cInput != BACKSPACE &&
               cInput != ENTER &&
-              cInput != SPACE &&
-              i != S_NOMEUSU) {
+              //cInput != SPACE &&
+              i != S_NOMECLI) {
         putch(cInput);
         retornoCadastroCliente.nomeCliente[i] = cInput;
         i++;
@@ -140,7 +133,7 @@ stUsuCliente trataInputCliente(){
       else if(cInput != BACKSPACE &&
               cInput != ENTER &&
               cInput != SPACE &&
-              i != S_DATANASCIMENTO) {
+              i != S_DTNASCCLI) {
         putch(cInput);
         retornoCadastroCliente.dataNascCliente[i] = cInput;
         i++;
@@ -152,11 +145,91 @@ stUsuCliente trataInputCliente(){
       };
  }while (cInput != ENTER);
 
+ FILE *arq;
+ int vok;
+ fflush(stdin);
+ arq = fopen("./BancoDados/T_CLIENTE.dat", "ab");
+    if (arq == NULL)
+    {
+        exibeMensagemSistema("Erro ao abrir arquivo T_CLIENTE.dat");
+        memset(&retornoCadastroCliente, '\0' , sizeof(retornoCadastroCliente));
+        return retornoCadastroCliente;
+    }
 
-// returnUsuario = validaUsuario(usuLogin);
+    vok = fwrite (&retornoCadastroCliente, sizeof(retornoCadastroCliente), 1, arq);
+    if (vok == 1)
+    {
+        fclose(arq);
+        exibeMensagemSistema("Cliente cadastrado com sucesso!.");
+        return retornoCadastroCliente;
+    }
+    else
+    {
+        fclose (arq);
+        exibeMensagemSistema("Erro ao gravar Cliente!.");
+        memset(&retornoCadastroCliente, '\0' , sizeof(retornoCadastroCliente));
+        return retornoCadastroCliente;
+    }
  return retornoCadastroCliente;
 };
 
+void chamaSubMenuCadastroCliente(){
+    int digSubMenu;
+    bool resposta;
+    memset(&resposta, '\0' , sizeof(resposta));
+    resposta = 83;
+    chamaTelaSubMenuCadastroCliente();
+    digSubMenu = 1;
+    setCursorXY(10,20);
+    printf("Digitar opcao do sub-menu: ");
+    scanf("%d", &digSubMenu);
+     switch(digSubMenu)
+      {
+       case 1:
+        while ( resposta == true ){
+                resposta = cadastroCliente( );
+        }
+        menuSistema();
+        break;
+       case 2:
+       // while ( resposta == true ){
+       //         resposta = alteraCliente( );
+       // }
+        menuSistema();
+        break;
+       case 3:
+       // while ( resposta == true ){
+       //         resposta = deletaCliente( );
+       // }
+        menuSistema();
+        break;
+       case 4:
+        menuSistema();
+        break;
+       default:
+        exibeMensagemSistema("Erro - Opcao invalida!");
+        chamaSubMenuCadastroCliente();
+        break;
+      } //switch
+    return digSubMenu;
+};
+
+void chamaTelaSubMenuCadastroCliente(){
+  consoleTela();
+  desenhaTelaPadrao();
+  desenhaTelaSubMenuCadastroCliente();
+}
+
+void desenhaTelaSubMenuCadastroCliente(){
+ setCursorXY(30,4);
+ printf("1 - Cadastrar Cliente");
+ setCursorXY(30,5);
+ printf("2 - Alterar Cliente");
+ setCursorXY(30,6);
+ printf("3 - Excluir Cliente");
+ setCursorXY(30,7);
+ printf("4 - Voltar");
+};
 
 
 

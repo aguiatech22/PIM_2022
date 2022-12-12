@@ -7,12 +7,30 @@
 #include "cadastroProduto.h"
 
 bool cadastroProduto(){
-    stUsuCadastroProduto cadastroProduto;
+    char digResposta;
+   struct stUsuCadastroProduto cadastroProduto;
     chamaTelaCadastroProduto();
-    stUsuCadastroProduto trataInputCadasProduto();
-
- //return memcmp(cadastroSistema.codusu, cadastroSistema_comp.codusu, sizeof(cadastroSistema.codusu)) == 0;
-    return true;
+struct    stUsuCadastroProduto trataInputCadasProduto();
+    consoleTela();
+    desenhaTelaPadrao();
+     digResposta = '\0';
+    bool ok = false;
+    while(ok == false){
+        if ( digResposta == 'S' || digResposta == 'N' )
+         {
+             ok = true;
+         }
+         else
+         {
+            setCursorXY(10,10);
+            printf("Deseja cadastrar um novo produto?(S/N)");
+            scanf("%s", &digResposta);
+         }
+    }
+     if (digResposta == 'S')
+      return true;
+     else
+        return false;
 }
 
 void chamaTelaCadastroProduto()
@@ -25,7 +43,7 @@ void chamaTelaCadastroProduto()
 void desenhaTelaCadastroProduto()
 {
 
- stUsuCadastroProduto usuCadastroProduto;
+struct stUsuCadastroProduto usuCadastroProduto;
  memset(&usuCadastroProduto, '\0', sizeof(usuCadastroProduto));
 
  // Entrada de dados cadastro
@@ -50,8 +68,8 @@ void desenhaTelaCadastroProduto()
  printf("Nome Fabricante     :");
 
 };
-stUsuCadastroProduto trataInputCadasProduto(){
- stUsuCadastroProduto retornoCadastroProduto = {0};
+struct stUsuCadastroProduto trataInputCadasProduto(){
+struct stUsuCadastroProduto retornoCadastroProduto = {0};
 
  char cInput;
  int i = 0;
@@ -156,12 +174,92 @@ i = 0;
       };
  }while (cInput != ENTER);
 
+FILE *arq;
+ int vok;
+ fflush(stdin);
+ arq = fopen("./BancoDados/T_usuario.dat", "ab");
+    if (arq == NULL)
+    {
+        exibeMensagemSistema("Erro ao abrir arquivo T_usuario.dat");
+        memset(&retornoCadastroProduto, '\0' , sizeof(retornoCadastroProduto));
+        return retornoCadastroProduto;
+    }
 
-// returnUsuario = validaUsuario(usuLogin);
+    vok = fwrite (&retornoCadastroProduto, sizeof(retornoCadastroProduto), 1, arq);
+    if (vok == 1)
+    {
+        fclose(arq);
+        exibeMensagemSistema("Produto cadastrado com sucesso!.");
+        return retornoCadastroProduto;
+    }
+    else
+    {
+        fclose (arq);
+        exibeMensagemSistema("Erro ao gravar usuario!.");
+        memset(&retornoCadastroProduto, '\0' , sizeof(retornoCadastroProduto));
+        return retornoCadastroProduto;
+    }
+
  return retornoCadastroProduto;
 };
 
+void chamaSubMenuCadastroProduto(){
+    int digSubMenu;
+    bool resposta;
+    memset(&resposta, '\0' , sizeof(resposta));
+    resposta = 83;
+    chamaTelaSubMenuCadastroProduto();
+    digSubMenu = 1;
+    setCursorXY(10,20);
+    printf("Digitar opcao do sub-menu: ");
+    scanf("%d", &digSubMenu);
+     switch(digSubMenu)
+      {
+       case 1:
+          while ( resposta == true ){
+                resposta = cadastroProduto( );
+        }
+        menuSistema();
+        break;
+       case 2:
+         // while ( resposta == true ){
+       // resposta = alteraProduto( );
+      // }
+        menuSistema();
+        break;
+       case 3:
+          //while ( resposta == true ){
+        //resposta = deletaProduto( );
+        //}
+        menuSistema();
+        break;
+       case 4:
+        menuSistema();
+        break;
+       default:
+        exibeMensagemSistema("Erro - Opcao invalida!");
+        void chamaSubMenuCadastroProduto();
+        break;
+      } //switch
+    return digSubMenu;
+};
 
+void chamaTelaSubMenuCadastroProduto(){
+  consoleTela();
+  desenhaTelaPadrao();
+  desenhaTelaSubMenuCadastroProduto();
+}
+
+void desenhaTelaSubMenuCadastroProduto(){
+ setCursorXY(30,4);
+ printf("1 - Cadastrar produto");
+ setCursorXY(30,5);
+ printf("2 - Alterar produto");
+ setCursorXY(30,6);
+ printf("3 - Excluir produto");
+ setCursorXY(30,7);
+ printf("4 - Voltar");
+};
 
 
 

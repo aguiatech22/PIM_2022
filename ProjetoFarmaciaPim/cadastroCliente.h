@@ -1,20 +1,21 @@
 #ifndef CADASTROCLIENTE_H_INCLUDED
 #define CADASTROCLIENTE_H_INCLUDED
-#define S_CODUSU 15
-#define S_SENHAUSU 15
-#define S_NOMEUSU 60
-#define S_DATANASCIMENTO 10
+#define S_CODCLI 15
+#define S_NOMECLI 50
+#define S_DTNASCCLI 10
 #endif // CADASTROCLIENTE_H_INCLUDED
 
-typedef struct {
-    char codigoCliente[S_CODUSU];
-    char senhaCliente[S_SENHAUSU];
-    char nomeCliente[S_NOMEUSU];
-    char dataNascCliente[S_DATANASCIMENTO];
-}stUsuCliente;
+ struct stUsuCliente{
+    char codigoCliente[S_CODCLI];
+    char nomeCliente[S_NOMECLI];
+    char dataNascCliente[S_DTNASCCLI];
+};
 
 bool cadastroCliente();
 void chamaTelaCadastroCliente();
 void desenhaTelaCadastroCliente();
-stUsuCliente trataInputCliente();
+struct stUsuCliente trataInputCliente();
+struct stUsuCliente retornoCadastroCliente();
+void chamaSubMenuCadastroCliente();
+void desenhaTelaSubMenuCadastroCliente();
 

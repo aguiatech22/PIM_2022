@@ -23,16 +23,15 @@ int menuSistema(){
         chamaSubMenuCadastroUsuario( );
         break;
        case 2:
-        //chamaSubMenuCadastroCliente( );
+        chamaSubMenuCadastroCliente( );
         //while ( resposta == true ){
-        //        resposta = cadastroCliente( );
+        //resposta = cadastroCliente( );
         //}
-
          break;
        case 3:
-        //chamaSubMenuCadastroProduto( );
+        chamaSubMenuCadastroProduto( );
         //while ( resposta == true ){
-        //        resposta = cadastroProduto( );
+        //    resposta = cadastroProduto( );
         //}
            break;
        case 4:

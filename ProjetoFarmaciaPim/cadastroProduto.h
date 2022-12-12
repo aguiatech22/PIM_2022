@@ -6,15 +6,18 @@
 #endif // CADASTROPRODUTO_H_INCLUDED
 
 
-typedef struct {
+ struct stUsuCadastroProduto{
     char codigoLote[S_CODIGOLOTE];
     char validadeProduto[S_DATAVALIDADE];
     char fabriProduto [S_DATAVALIDADE];
     char nomeFabricante[S_FABRICANTE];
 
-}stUsuCadastroProduto;
+};
 
 bool cadastroProduto();
 void chamaTelaCadastroProduto();
 void desenhaTelaCadastroProduto();
-stUsuCadastroProduto trataInputCadasProduto();
+void chamaSubMenuCadastroProduto();
+void chamaTelaSubMenuCadastroProduto();
+void desenhaTelaSubMenuCadastroProduto();
+struct stUsuCadastroProduto trataInputCadasProduto();

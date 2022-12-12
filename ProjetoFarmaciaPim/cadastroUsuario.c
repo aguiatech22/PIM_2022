@@ -14,13 +14,13 @@ bool cadastroUsuario(){
     cadastroUsuario = trataInputCadastro();
     consoleTela();
     desenhaTelaPadrao();
-    setCursorXY(5,20);
-    printf("Deseja cadastrar um novo usuario?(S/N)");
+   // setCursorXY(5,20);
+    //printf("Deseja cadastrar um novo usuario?(S/N)");
 
     digResposta = '\0';
     bool ok = false;
     while(ok == false){
-        if ( digResposta == 'S' || digResposta == 'N' )
+        if ( digResposta == 'S' || digResposta == 'N' || digResposta == 's' || digResposta == 'n' )
          {
              ok = true;
          }
@@ -31,7 +31,7 @@ bool cadastroUsuario(){
             scanf("%s", &digResposta);
          }
     }
-     if (digResposta == 'S')
+     if (digResposta == 'S' || digResposta == 's')
       return true;
      else
         return false;
@@ -146,7 +146,7 @@ struct stUsuCadastro trataInputCadastro(){
       }
       else if(cInput != BACKSPACE &&
               cInput != ENTER &&
-              cInput != SPACE &&
+              //cInput != SPACE &&
               i != S_NOMEUSU) {
         putch(cInput);
         retornoCadastro.nomeUsuario[i] = cInput;
